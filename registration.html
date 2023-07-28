@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Registration</title>
+	
+	<style type="text/css">
+		*
+		{
+			margin:0;
+			color:#000000;
+			font:600 16px/18px 'Open Sans',sans-serif;
+		}
+		body
+		{
+			width: 100%;
+			height: 100vh;
+			background:#FF5733;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		form
+		{
+			width: 280px;
+			height: auto;
+			padding: 40px;
+			border-radius: 10px;
+			background:#FFBD33;
+		}
+		input[type=text] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  background:#FFEB85;
+  box-sizing: border-box;
+  border: 3px solid #DD651A;
+  border-radius: 10px;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  outline: none;
+}
+
+input[type=text]:focus {
+  border: 3px solid #893E10;
+}
+
+input[type=submit]{
+  background-color: #EC5D1D;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+</style>
+</head>
+<body>
+	<form name="submit-to-google-sheet">
+		<label>Name :</label><br>
+		<input type="text" name="name" required><br><br>
+		<label>Email:</label><br>
+		<input type="text" name="email" required><br><br>
+		<label>Phone Number :</label><br>
+		<input type="text" name="phone number" required><br><br>
+		<input type="submit" name="submit"><br>
+	
+	<span id="success"></span>
+	</form>
+
+<script>
+  const scriptURL = 'https://script.google.com/macros/s/AKfycby0z1hLgMAkCFm-53uU9cE7-i2YNGVmdVIjcTieXLkpFccN8-9HC8NBJYoSMkLj_kDC/exec'
+  const form = document.forms['submit-to-google-sheet']
+  const success = document.getElementById('success');
+  form.addEventListener('submit', e => {
+    e.preventDefault()
+    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+      .then(response =>  {
+      	success.innerHTML="data successfully submitted";
+
+      	setTimeout(function()
+      	{
+      		success.innerHTML="";
+      	},5000)
+      	form.reset();
+      })
+      .catch(error => console.error('Error!', error.message))
+  })
+</script>
+</body>
+</html>
